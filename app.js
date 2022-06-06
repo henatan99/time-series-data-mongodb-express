@@ -1,13 +1,20 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+import dotenv from "dotenv";
+import express from "express";
+import mongoose from "mongoose";
+import bodyParser from "body-parser";
+import cors from "cors";
 
+dotenv.config();
 const app = express();
 
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () =>{
+    console.log("Database connected");
+});
+
 // Routes 
-const todoRoutes = require("./routes/todo");
+import todoRoutes from "./routes/todo.js";
 
 // DB Connection
 mongoose
